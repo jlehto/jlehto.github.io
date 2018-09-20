@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8"> 
 		<title>Leaflet experiments</title>
 		<script src="lib/jquery.min.js"></script>
 		<script src="lib/leaflet/leaflet.js"></script>
@@ -16,11 +17,14 @@
 	        #sidebar {
 	        	height:100vh;
 	        	background-color:#eeeeee;
+	        	padding-top: 3%;
 	        }
 	    </style>
 	</head>
 	<body>
-		<div id="sidebar" class="col-md-3"></div>
+		<div id="sidebar" class="col-md-3 text-center">
+			<button id="locateBtn" type="button" class="btn btn-primary">N&auml;yt&auml; sijaintisi</button>
+		</div>
 		<div id="map" class="col-md-9"></div>
 	</body>	
 </html>
