@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Testing</title>
-	<script src="lib/jquery.min.js"></script>
-	<script src="lib/leaflet/leaflet.js"></script>
-	<script src="js/mymap.js"></script>
-	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
-	<style>
-        #map {
-            height:100vh;
-        }
-    </style>
-</head>
-<body>
-<div id="map"/>
-</body>
+	<head>
+		<title>Leaflet experiments</title>
+		<script src="lib/jquery.min.js"></script>
+		<script src="lib/leaflet/leaflet.js"></script>
+		
+		<script src="js/mymap.js"></script>
+
+		<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+		<style>
+	        #map {
+	            height:100vh;
+	        }
+	        #sidebar {
+	        	height:100vh;
+	        	background-color:#eeeeee;
+	        }
+	    </style>
+	</head>
+	<body>
+		<div id="sidebar" class="col-md-3"></div>
+		<div id="map" class="col-md-9"></div>
+	</body>	
 </html>
