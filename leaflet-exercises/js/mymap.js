@@ -1,6 +1,6 @@
 
-var myMap;
-var layer;
+var map;
+var mapLayer;
 
 $(document).ready(function(){
 	locateBtn.addEventListener("click", locate);
@@ -8,10 +8,16 @@ $(document).ready(function(){
 });
   
 function loadMap(pos) {
-	myMap = L.map('map', {center:pos, zoom:15});
-	layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
-	myMap.addLayer(layer);
-	//console.log(typeof(pos[1]))
+	map = L.map('map', {center:pos, zoom:15});
+	mapLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
+		
+	map.spin(true);
+	setTimeout(() => {
+
+	    map.addLayer(mapLayer);    
+	    map.spin(false);
+	}, 3000);
+
 	$("#lat").append(document.createTextNode(pos[0]));
 	$("#long").append(document.createTextNode(pos[1]));
 
@@ -24,8 +30,8 @@ function locate() {
 		console.log(lat,lng);
 		pos = [lat.toFixed(2),lng.toFixed(2)];
 		
-		myMap.off();
-		myMap.remove();
+		map.off();
+		map.remove();
 	    loadMap(pos);
 	},error);
 
