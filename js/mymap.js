@@ -1,22 +1,29 @@
 
 var myMap;
-var lyrOSM;
+var layer;
 
 $(document).ready(function(){
 	locateBtn.addEventListener("click", locate);
-	loadMap([60.1699, 24.9384]); //hgin keskusta
+	loadMap([60.16, 24.93]); //hgin keskusta
 });
   
 function loadMap(pos) {
 	myMap = L.map('map', {center:pos, zoom:15});
-	lyrOSM = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
-	myMap.addLayer(lyrOSM);
+	layer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
+	myMap.addLayer(layer);
+	//console.log(typeof(pos[1]))
+	$("#lat").append(document.createTextNode(pos[0]));
+	$("#long").append(document.createTextNode(pos[1]));
+
 }  
 
 function locate() {
-	//console.log("Locate");
 	navigator.geolocation.getCurrentPosition(position => {
-		pos = [position.coords.latitude, position.coords.longitude];
+		lat = position.coords.latitude;
+		lng = position.coords.longitude;
+		console.log(lat,lng);
+		pos = [lat.toFixed(2),lng.toFixed(2)];
+		
 		myMap.off();
 		myMap.remove();
 	    loadMap(pos);
