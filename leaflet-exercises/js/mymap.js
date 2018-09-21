@@ -4,10 +4,25 @@ var mapLayer;
 
 $(document).ready(function(){
 	locateBtn.addEventListener("click", locate);
-	loadMap([60.16, 24.93]); //hgin keskusta
+	loadMap({lat:60.16, lng:24.93}); //hgin keskusta
+
+	map.on('locationfound', ev => {
+		pos = ev.latlng;
+		console.log(pos);
+		map.off();
+		map.remove();
+	    loadMap(pos);
+	});
+
+	map.on('locationerror', ev => {
+		console.log(ev);
+		alert("Could not find location");
+	});
 });
-  
-function loadMap(pos) {
+
+const locate = () => map.locate();
+
+const loadMap = pos => {
 	map = L.map('map', {center:pos, zoom:15, dragging:false});
 	mapLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
 		
@@ -19,25 +34,9 @@ function loadMap(pos) {
 	    L.circleMarker(pos).addTo(map);
 	}, 3000);
 	
-	$("#lat").append(document.createTextNode(pos[0]));
-	$("#long").append(document.createTextNode(pos[1]));
+	$("#lat").append(document.createTextNode(pos.lat.toFixed(2)));
+	$("#long").append(document.createTextNode(pos.lng.toFixed(2)));
 
 }  
 
 
-function locate() {
-	navigator.geolocation.getCurrentPosition(position => {
-		lat = position.coords.latitude;
-		lng = position.coords.longitude;
-		console.log(lat,lng);
-		pos = [lat.toFixed(2),lng.toFixed(2)];
-		
-		map.off();
-		map.remove();
-	    loadMap(pos);
-	},error);
-
-	function error(err) {
-	  console.warn(`ERROR(${err.code}): ${err.message}`);
-	}
-}
