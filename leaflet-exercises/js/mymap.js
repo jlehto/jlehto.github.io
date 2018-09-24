@@ -2,8 +2,12 @@
 var map;
 var mapLayer;
 
-$(document).ready(function(){
-	locateBtn.addEventListener("click", locate);
+$(document).ready(() => {
+	
+	$('#locateBtn').click(() => {
+		map.locate();
+	});
+	
 	loadMap({lat:60.16, lng:24.93}); //hgin keskusta
 
 	map.on('locationfound', ev => {
@@ -19,16 +23,11 @@ $(document).ready(function(){
 		alert("Could not find location");
 	});
 
-
 	map.on('mousemove', ev => {
 		$("#lat").html(ev.latlng.lat.toFixed(3));
 		$("#long").html(ev.latlng.lng.toFixed(3));
 	});
-
-
 });
-
-const locate = () => map.locate();
 
 const loadMap = pos => {
 	map = L.map('map', {center:pos, zoom:15, dragging:false});
@@ -41,5 +40,3 @@ const loadMap = pos => {
 	    L.circleMarker(pos).addTo(map);
 	}, 3000);
 }  
-
-
