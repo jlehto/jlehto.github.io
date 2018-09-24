@@ -1,15 +1,22 @@
 
 var map;
 var mapLayer;
+var popUp;
+
+//const hkiCoords = {lat:60.16, lng:24.93};
+const minLng = 22;
+const maxLng = 30;
+const minLat = 60;
+const maxLat = 70;
 
 $(document).ready(() => {
 	
 	$('#locateBtn').click(() => {
 		map.locate();
 	});
-	
-	loadMap({lat:60.16, lng:24.93}); //hgin keskusta
 
+	loadMap(getRandomPosition()); 
+	
 	map.on('locationfound', ev => {
 		pos = ev.latlng;
 		console.log(pos);
@@ -29,8 +36,20 @@ $(document).ready(() => {
 	});
 });
 
+const getRandomPosition = () => {
+	rndLng = Math.random() * (maxLng - minLng) + minLng;
+	rndLat = Math.random() * (maxLat - minLat) + minLat;
+	return {lat:rndLat, lng:rndLng};
+}
+
 const loadMap = pos => {
-	map = L.map('map', {center:pos, zoom:15, dragging:false});
+	map = L.map('map', {
+		center:pos, 
+		zoom:13, 
+		dragging:false,  
+		zoomsliderControl: true,
+         zoomControl: false,
+     });
 	mapLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
 		
 	map.spin(true);
@@ -38,5 +57,13 @@ const loadMap = pos => {
 	    map.addLayer(mapLayer);    
 	    map.spin(false);
 	    L.circleMarker(pos).addTo(map);
+	    L.control.scale({imperial:false}).addTo(map);
 	}, 3000);
 }  
+
+const makePopUp = (coords,content) => {
+	return L.popup()
+		.setLatLng(coords)
+		.setContent(content)
+		.openOn(map);
+}
