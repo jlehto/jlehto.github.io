@@ -18,6 +18,14 @@ $(document).ready(function(){
 		console.log(ev);
 		alert("Could not find location");
 	});
+
+
+	map.on('mousemove', ev => {
+		$("#lat").html(ev.latlng.lat.toFixed(3));
+		$("#long").html(ev.latlng.lng.toFixed(3));
+	});
+
+
 });
 
 const locate = () => map.locate();
@@ -28,15 +36,10 @@ const loadMap = pos => {
 		
 	map.spin(true);
 	setTimeout(() => {
-
 	    map.addLayer(mapLayer);    
 	    map.spin(false);
 	    L.circleMarker(pos).addTo(map);
 	}, 3000);
-	
-	$("#lat").append(document.createTextNode(pos.lat.toFixed(2)));
-	$("#long").append(document.createTextNode(pos.lng.toFixed(2)));
-
 }  
 
 
