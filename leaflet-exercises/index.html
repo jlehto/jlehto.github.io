@@ -8,11 +8,17 @@
 		<script src="lib/leaflet-spin/leaflet.spin.js"></script>
 		<script src="lib/leaflet-spin/spin.js"></script>
 		<script src="plugins/L.Control.Zoomslider.js" ></script>
+		<script src="plugins/L.Control.Sidebar.js"></script>
+		<script src="plugins/L.Control.PolylineMeasure.js"></script>
+		<script src="plugins/easy-button.js"></script>
 		<script src="js/mymap.js"></script>
 
 		<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
 		<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
 		<link rel="stylesheet" href="plugins/L.Control.Zoomslider.css" />
+		<link rel="stylesheet" href="plugins/L.Control.Sidebar.css" />
+		<link rel="stylesheet" href="plugins/L.Control.PolylineMeasure.css" />
+		<link rel="stylesheet" href="plugins/easy-button.css" />
 		<style>
 	        #map {
 	            height:100vh;
@@ -25,12 +31,12 @@
 	    </style>
 	</head>
 	<body>
-		<div id="sidebar" class="col-md-3 text-center">
+		<div id="sidebar" class="text-center col-md-3">
 			<p>Latitude : <span id="lat"></span></p>
 			<p>Longitude : <span id="long"></span></p>
 
-			<button id="locateBtn" type="button" class="btn btn-primary">Get Location</button>
+			<button id="locateBtn" type="button" class="btn btn-primary">Miss&auml Leo on?</button>
 		</div>
-		<div id="map" class="col-md-9"></div>
+		<div id="map" class="col-md-12"></div>
 	</body>	
 </html>
