@@ -76,10 +76,6 @@ $(document).ready(() => {
 		alert("Paikannus ei onnistunut");
 	});
 
-	map.on('mousemove', ev => {
-		$("#lat").html(ev.latlng.lat.toFixed(3));
-		$("#long").html(ev.latlng.lng.toFixed(3));
-	});
 });
 
 const getRandomPosition = () => {
@@ -109,6 +105,11 @@ const loadMap = (pos,popupContent=null) => {
   		provider: provider,           
   		style: 'bar',                 
 	}).addTo(map);
+
+	map.on('mousemove', ev => {
+		$("#lat").html(ev.latlng.lat.toFixed(3));
+		$("#long").html(ev.latlng.lng.toFixed(3));
+	});
 
 	mapLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
 	
