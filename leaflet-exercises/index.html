@@ -11,6 +11,7 @@
 		<script src="plugins/L.Control.Sidebar.js"></script>
 		<script src="plugins/L.Control.PolylineMeasure.js"></script>
 		<script src="plugins/easy-button.js"></script>
+		<script src="plugins/geosearch.min.js"></script>
 		<script src="js/mymap.js"></script>
 
 		<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
@@ -19,6 +20,8 @@
 		<link rel="stylesheet" href="plugins/L.Control.Sidebar.css" />
 		<link rel="stylesheet" href="plugins/L.Control.PolylineMeasure.css" />
 		<link rel="stylesheet" href="plugins/easy-button.css" />
+		<link rel="stylesheet" href="plugins/geosearch.css" />
+
 		<style>
 	        #map {
 	            height:100vh;
@@ -34,8 +37,9 @@
 		<div id="sidebar" class="text-center col-md-3">
 			<p>Latitude : <span id="lat"></span></p>
 			<p>Longitude : <span id="long"></span></p>
-
-			<button id="locateBtn" type="button" class="btn btn-primary">Miss&auml Leo on?</button>
+			
+			<button id="locateBtn" type="button" class="btn btn-primary"></button>
+			<p/>
 		</div>
 		<div id="map" class="col-md-12"></div>
 	</body>	

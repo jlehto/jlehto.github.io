@@ -4,6 +4,9 @@ var mapLayer;
 var popUp;
 var ctlSidebar;
 var sidebarButton;
+var geoSearch;
+var provider;
+var ctlSearch;
 
 //const hkiCoords = {lat:60.16, lng:24.93};
 const minLng = 22;
@@ -11,22 +14,26 @@ const maxLng = 30;
 const minLat = 60;
 const maxLat = 70;
 
-var locateMe = true;
+var onLocation = false;
 
 $(document).ready(() => {
 	
-	$('#locateBtn').text('Missäs Leo on?');
+	geoSearch = window.GeoSearch;
+	
+  	provider = new geoSearch.OpenStreetMapProvider();
+
+	$('#locateBtn').text("Näytä oma sijainti");
 
 	$("#locateBtn").click(() => {
-    	if(locateMe) {
+    	if(!onLocation) {
    	 		map.locate();
-   	 		$('#locateBtn').text("Jonnekin muualle"); 
-   	 		locateMe = false; 
+   	 		$('#locateBtn').text("Satunnainen kohde"); 
+   	 		onLocation = true;
     	}
     	else {
     		loadMap(getRandomPosition()); 
-   	 		$('#locateBtn').text("Missäs Leo on?");
-   	 		locateMe = true;
+   	 		$('#locateBtn').text("Näytä taas oma sijainti");
+   	 		onLocation = false;
     	}
     	sidebarButton.state('showSidebar')
 		ctlSidebar.toggle();  
@@ -40,7 +47,7 @@ $(document).ready(() => {
 	    states: [{
 	            stateName: 'showSidebar',        
 	            icon:      'glyphicon-menu-right',              
-	            //title:     '',      
+	            title:     'Näytä sivupalkki',      
 	            onClick: (btn) => {       
 	       			ctlSidebar.toggle();     
 	                btn.state('hideSidebar');  
@@ -48,7 +55,7 @@ $(document).ready(() => {
 	        }, {
 	            stateName: 'hideSidebar',        
 	            icon:      'glyphicon-menu-left',              
-	            //title:     '',      
+	            title:     'Piilota sivupalkki',      
 	            onClick: (btn) => {       
 	       			ctlSidebar.toggle();     
 	                btn.state('showSidebar');  
@@ -56,19 +63,17 @@ $(document).ready(() => {
 	    	}]
 	});
 
+	loadMap(getRandomPosition());
 
-
-	loadMap(getRandomPosition()); 
-	
 	map.on('locationfound', ev => {
 		pos = ev.latlng;
 		console.log(pos);
-	    loadMap(pos, "<h3>Leo Lehto</h3>");
+	    loadMap(pos, "<h3>Olet täällä</h3>");
 	});
 
 	map.on('locationerror', ev => {
 		console.log(ev);
-		alert("Could not find location");
+		alert("Paikannus ei onnistunut");
 	});
 
 	map.on('mousemove', ev => {
@@ -84,8 +89,10 @@ const getRandomPosition = () => {
 }
 
 const loadMap = (pos,popupContent=null) => {
-	if (map)
+	if (map) {
+		map.removeControl(ctlSearch);
 		map.off().remove();
+	}
 		
 	map = L.map('map', {
 		center:pos, 
@@ -94,8 +101,15 @@ const loadMap = (pos,popupContent=null) => {
 		zoomsliderControl: true,
         zoomControl: false,
      });
+	
 	map.addControl(ctlSidebar);
 	sidebarButton.addTo(map);
+	
+	ctlSearch = new geoSearch.GeoSearchControl({
+  		provider: provider,           
+  		style: 'bar',                 
+	}).addTo(map);
+
 	mapLayer = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png');
 	
 	map.spin(true);
