@@ -16,7 +16,8 @@ $(document).ready(() => {
 
 const init = () => {
 	
-	map = L.map('map').setView([60.40, 25.07], 8);
+	map = L.map('map').setView([60.40, 25.07], 9);
 
 	L.tileLayer(tileUrl,tileOptions).addTo(map);
+	let geojson = L.geoJson(uusimaaData).addTo(map);
 }
