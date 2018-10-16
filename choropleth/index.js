@@ -1,6 +1,7 @@
 var map;
 var tileUrl;
 var tileOptions = {};
+var geoJson;
 
 $(document).ready(() => {
 	if (typeof apikey === 'undefined') {
@@ -19,7 +20,10 @@ const init = () => {
 	map = L.map('map').setView([60.40, 25.07], 8);
 
 	L.tileLayer(tileUrl,tileOptions).addTo(map);
-	let geojson = L.geoJson(uusimaaData, {style: style}).addTo(map);
+	geojson = L.geoJson(uusimaaData, {
+		style: style,
+		onEachFeature: onEachFeature
+	}).addTo(map);
 }
 
 const style = feature => ({
@@ -50,4 +54,30 @@ const getColor = p =>
 	p > 20000  ? colors[2] :
 	p > 5000   ? colors[1] :
 				colors[0];
+
+const onEachFeature = (feature, layer) => {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        //click: zoomToFeature
+    });
+}				
+
+const highlightFeature = ev => {
+    let layer = ev.target;
+
+    layer.setStyle({
+        weight: 3,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+}
+
+const resetHighlight = ev =>
+	geojson.resetStyle(ev.target);
 
