@@ -31,7 +31,7 @@ const style = feature => ({
         fillOpacity: 0.5
 })
 
-const colors = ['#f7fcf5',
+const colors = [
 				'#e5f5e0',
 				'#c7e9c0',
 				'#a1d99b',
@@ -42,13 +42,12 @@ const colors = ['#f7fcf5',
 				'#00441b'];
 
 const getColor = p =>
-	p > 500000 ? colors[8] :
-	p > 100000 ? colors[7] :
-	p > 50000  ? colors[6] :
-	p > 40000  ? colors[5] :
-	p > 30000  ? colors[4] :
-	p > 20000  ? colors[3] :
-	p > 10000  ? colors[2] :
+	p > 500000 ? colors[7] :
+	p > 100000 ? colors[6] :
+	p > 50000  ? colors[5] :
+	p > 40000  ? colors[4] :
+	p > 30000  ? colors[3] :
+	p > 20000  ? colors[2] :
 	p > 5000   ? colors[1] :
 				colors[0];
 
