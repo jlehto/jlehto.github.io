@@ -1,17 +1,22 @@
 var map;
+var tileUrl;
+var tileOptions = {};
 
 $(document).ready(() => {
-	//$("#map").html("<pre>Ready!</pre>");
+	if (typeof apikey === 'undefined') {
+		console.log("No mapbox access token provided. Using OSM as base")
+		tileUrl = 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+	} else {
+		tileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + apikey;
+		tileOptions =  {id: 'mapbox.light'}
+	}
 	init();
 	
 });
 
 const init = () => {
-	let tileUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + apikey;
-	let tileOptions =  {id: 'mapbox.light'}
 	
 	map = L.map('map').setView([60.40, 25.07], 8);
 
 	L.tileLayer(tileUrl,tileOptions).addTo(map);
-
 }
