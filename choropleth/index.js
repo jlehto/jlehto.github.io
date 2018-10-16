@@ -2,6 +2,7 @@ var map;
 var tileUrl;
 var tileOptions = {};
 var geoJson;
+var ctlInfo;
 
 $(document).ready(() => {
 	if (typeof apikey === 'undefined') {
@@ -24,6 +25,25 @@ const init = () => {
 		style: style,
 		onEachFeature: onEachFeature
 	}).addTo(map);
+
+	info = L.control();
+
+	//info.options = {position: 'bottomright'};
+
+	info.onAdd = function (map) {
+	    this._div = L.DomUtil.create('div', 'info'); 
+	    this.update();
+	    return this._div;
+	};
+
+	info.update = function (props) {
+    	this._div.innerHTML = (props ?
+        '<h3><b>' + props.name + ' : <br/>' + props.population + '</b></h3>' 
+        : '<h4>Vie kursori kunnan kohdalle nähdäksesi väestömäärän</h4>');
+	};
+
+	info.addTo(map);
+
 }
 
 const style = feature => ({
@@ -76,8 +96,11 @@ const highlightFeature = ev => {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
+    info.update(layer.feature.properties);
 }
 
-const resetHighlight = ev =>
+const resetHighlight = ev => {
 	geojson.resetStyle(ev.target);
+	info.update();
+}
 
